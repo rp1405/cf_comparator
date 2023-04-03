@@ -17,6 +17,12 @@ async function handleClick(handle, plotArr, setPlotArr, setChart) {
     alert("User Not Found");
     return;
   }
+  console.log(dataArr);
+  for (var i = 0; i < dataArr.length; i++) {
+    dataArr[i].ratingUpdateTimeSeconds = new Date(
+      dataArr[i].ratingUpdateTimeSeconds * 1000
+    );
+  }
   var newPlot = [];
   newPlot.push([...plotArr[0]]);
   newPlot[0].push(handle);
@@ -24,7 +30,7 @@ async function handleClick(handle, plotArr, setPlotArr, setChart) {
   var dataSize = dataArr.length;
   var currNumber = plotArr[0].length;
   var i = 1;
-  var j = 1;
+  var j = 0;
   while (i < presentSize && j < dataSize) {
     var multipleElementArr = [...plotArr[i]];
     multipleElementArr.push(dataArr[j].newRating);
@@ -63,10 +69,8 @@ async function handleClick(handle, plotArr, setPlotArr, setChart) {
     newPlot.push(multipleElementArr);
     i++;
   }
-  for (var i = 1; i < newPlot.length; i++) {
-    newPlot[i][0] = new Date(newPlot[i][0] * 1000);
-  }
   setPlotArr(newPlot);
+
   setChart(
     <Chart
       chartType="LineChart"
